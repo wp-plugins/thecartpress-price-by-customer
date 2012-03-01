@@ -50,7 +50,7 @@ class TCPPriceByCustomer {
 		if ( $is_price_by_customer ) {
 			$price = tcp_get_the_price( $post_id );
 			if ( $price == 0 ) $price = '';
-			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="text" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="' . tcp_number_format( $price ) . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="3" maxlength="13"/></label>' . "\n";
+			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="text" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="' . tcp_number_format( $price ) . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="4" maxlength="13"/></label>' . "\n";
 		} else {
 			$out = '<input type="hidden" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="" />' . "\n";
 		}
