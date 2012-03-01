@@ -1,4 +1,4 @@
-=== Price by Customers for TheCartPress, eCommerce plugin for WordPress ===
+=== Price by Customers for TheCartPress eCommerce ===
 Contributors: thecartpress
 Tags: price, prices, CartPress, ecommerce, e-commerce, store, shop, shopping, shopping cart, cart, custom post type, taxonomy, taxonomies, ecomerce, products, TheCartPress, html5, Australia
 Requires at least: 3.1
