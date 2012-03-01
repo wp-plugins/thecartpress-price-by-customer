@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: TheCartPress Price by customer
-Plugin URI: http://thecartpress.com
+Plugin URI: http://extend.thecartpress.com/ecommerce-plugins/price-by-customers/
 Description: Allow to set product prices by customers
 Version: 1.0
 Author: TheCartPress team
