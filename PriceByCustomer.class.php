@@ -45,15 +45,16 @@ class TCPPriceByCustomer {
 		update_post_meta( $post_id, 'tcp_price_by_customer', isset( $_POST['tcp_price_by_customer'] ) );
 	}
 
-	function tcp_buy_button_options( $html, $post_id, $parent_id = 0 ) {
+	function tcp_the_add_to_cart_unit_field( $html, $post_id ) {
 		$is_price_by_customer = (bool)tcp_get_the_meta( 'tcp_price_by_customer', $post_id );
 		if ( $is_price_by_customer ) {
 			$price = tcp_get_the_price( $post_id );
 			if ( $price == 0 ) $price = '';
-			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="text" name="tcp_price_by_customer[]" id="tcp_price_by_customer" value="' . tcp_number_format( $price ) . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="3" maxlength="13"/></label>' . "\n";
-		} else
-			$out = '<input type="hidden" name="tcp_price_by_customer[]" id="tcp_price_by_customer" value="' . tcp_get_the_price( $post_id ) . '" />' . "\n";
-		return $out . $html;
+			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="text" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="' . tcp_number_format( $price ) . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="3" maxlength="13"/></label>' . "\n";
+		} else {
+			$out = '<input type="hidden" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="" />' . "\n";
+		}
+		return $html . $out;
 	}
 
 /**
@@ -76,7 +77,7 @@ class TCPPriceByCustomer {
 			add_action( 'tcp_product_metabox_save_custom_fields', array( $this, 'tcp_product_metabox_save_custom_fields' ) );
 			add_action( 'tcp_product_metabox_delete_custom_fields', array( $this, 'tcp_product_metabox_delete_custom_fields' ) );
 		} else {
-			add_filter( 'tcp_buy_button_options', array( $this, 'tcp_buy_button_options' ), 20, 3 );
+			add_filter( 'tcp_the_add_to_cart_unit_field', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 );
 			add_filter( 'tcp_add_item_shopping_cart', array( $this, 'tcp_add_item_shopping_cart' ) );
 		}
 	}
