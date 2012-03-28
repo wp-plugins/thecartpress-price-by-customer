@@ -3,7 +3,7 @@
 Plugin Name: TheCartPress Price by customer
 Plugin URI: http://extend.thecartpress.com/ecommerce-plugins/price-by-customers/
 Description: Allow to set product prices by customers
-Version: 1.0
+Version: 1.0.1
 Author: TheCartPress team
 Author URI: http://thecartpress.com
 License: GPL
@@ -30,7 +30,7 @@ Parent: thecartpress
 class TCPPriceByCustomer {
 
 	function tcp_product_metabox_custom_fields( $post_id ) {?>
-		<tr valign="top" class="tcp_price_by_customer" <?php echo $style;?>>
+		<tr valign="top" class="tcp_price_by_customer">
 			<th scope="row"><label for="tcp_price_by_customer"><?php _e( 'Is Price defined by customer', 'tcp-pbc' );?>:</label></th>
 			<td><input type="checkbox" name="tcp_price_by_customer" id="tcp_price_by_customer" <?php if ( (bool)get_post_meta( $post_id, 'tcp_price_by_customer', true ) ):?>checked="true" <?php endif;?>  />
 			</td>
@@ -58,15 +58,15 @@ class TCPPriceByCustomer {
 	}
 
 /**
- * @param $args = array{ 'i', 'post_id', 'count', 'unit_price', 'tax', 'unit_weight', 'price_to_show' }
+ * @param $args = array{ 'i', 'post_id', 'count', 'unit_price', 'unit_weight' }
  */
 	function tcp_add_item_shopping_cart( $args ) {
 		$is_price_by_customer = (bool)tcp_get_the_meta( 'tcp_price_by_customer', $args['post_id'] );
 		if ( $is_price_by_customer ) {
 			extract( $args );
 			if ( $is_price_by_customer && isset( $_REQUEST['tcp_price_by_customer'][$i] ) ) $unit_price = tcp_input_number( $_REQUEST['tcp_price_by_customer'][$i] );
-			$price_to_show = tcp_get_the_price_to_show( $post_id, $unit_price );
-			$args = compact( 'i', 'post_id', 'count', 'unit_price', 'tax', 'unit_weight', 'price_to_show' );
+			//$price_to_show = tcp_get_the_price_to_show( $post_id, $unit_price );
+			$args = compact( 'i', 'post_id', 'count', 'unit_price', 'unit_weight' );
 		}
 		return $args;
 	}
@@ -78,6 +78,7 @@ class TCPPriceByCustomer {
 			add_action( 'tcp_product_metabox_delete_custom_fields', array( $this, 'tcp_product_metabox_delete_custom_fields' ) );
 		} else {
 			add_filter( 'tcp_the_add_to_cart_unit_field', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 );
+			add_filter( 'tcp_buy_button_unit_text', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 ); //for 1.1.7
 			add_filter( 'tcp_add_item_shopping_cart', array( $this, 'tcp_add_item_shopping_cart' ) );
 		}
 	}
