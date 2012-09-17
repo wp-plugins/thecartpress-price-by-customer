@@ -3,7 +3,7 @@
 Plugin Name: TheCartPress Price by customer
 Plugin URI: http://extend.thecartpress.com/ecommerce-plugins/price-by-customers/
 Description: Allow to set product prices by customers
-Version: 1.0.2
+Version: 1.0.3
 Author: TheCartPress team
 Author URI: http://thecartpress.com
 License: GPL
@@ -29,10 +29,24 @@ Parent: thecartpress
 
 class TCPPriceByCustomer {
 
+	function __construct() {
+		if ( is_admin() ) {
+			add_action( 'tcp_product_metabox_custom_fields', array( $this, 'tcp_product_metabox_custom_fields' ) );
+			add_action( 'tcp_product_metabox_save_custom_fields', array( $this, 'tcp_product_metabox_save_custom_fields' ) );
+			add_action( 'tcp_product_metabox_delete_custom_fields', array( $this, 'tcp_product_metabox_delete_custom_fields' ) );
+		}
+		add_filter( 'tcp_the_add_to_cart_unit_field', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 );
+		add_filter( 'tcp_buy_button_unit_text', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 ); //for 1.1.7
+		add_filter( 'tcp_add_item_shopping_cart', array( $this, 'tcp_add_item_shopping_cart' ) );
+	}
+
 	function tcp_product_metabox_custom_fields( $post_id ) {?>
 		<tr valign="top" class="tcp_price_by_customer">
-			<th scope="row"><label for="tcp_price_by_customer"><?php _e( 'Is Price defined by customer', 'tcp-pbc' );?>:</label></th>
-			<td><input type="checkbox" name="tcp_price_by_customer" id="tcp_price_by_customer" <?php if ( (bool)get_post_meta( $post_id, 'tcp_price_by_customer', true ) ):?>checked="true" <?php endif;?>  />
+			<th scope="row">
+				<label for="tcp_price_by_customer"><?php _e( 'Is Price defined by customer', 'tcp-pbc' );?>:</label>
+			</th>
+			<td>
+				<input type="checkbox" name="tcp_price_by_customer" id="tcp_price_by_customer" <?php if ( (bool)get_post_meta( $post_id, 'tcp_price_by_customer', true ) ):?>checked="true" <?php endif;?>  />
 			</td>
 		</tr><?php
 	}
@@ -50,7 +64,8 @@ class TCPPriceByCustomer {
 		if ( $is_price_by_customer ) {
 			$price = tcp_get_the_price( $post_id );
 			if ( $price == 0 ) $price = '';
-			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="text" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="' . tcp_number_format( $price ) . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="4" maxlength="13"/></label>' . "\n";
+			else $price = tcp_number_format( $price );
+			$out = '<label>' . __( 'Type your price', 'tcp-pbc' ) . ': <input type="number" min="0" step="0.01" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="' . $price . '" title="' . __( 'Suggested price', 'tcp-pbc' ) . '" size="5" maxlength="13"/></label>' . "\n";
 		} else {
 			$out = '<input type="hidden" name="tcp_price_by_customer[]" id="tcp_price_by_customer_' . $post_id . '" value="" />' . "\n";
 		}
@@ -69,17 +84,6 @@ class TCPPriceByCustomer {
 			$args = compact( 'i', 'post_id', 'count', 'unit_price', 'unit_weight' );
 		}
 		return $args;
-	}
-
-	function __construct() {
-		if ( is_admin() ) {
-			add_action( 'tcp_product_metabox_custom_fields', array( $this, 'tcp_product_metabox_custom_fields' ) );
-			add_action( 'tcp_product_metabox_save_custom_fields', array( $this, 'tcp_product_metabox_save_custom_fields' ) );
-			add_action( 'tcp_product_metabox_delete_custom_fields', array( $this, 'tcp_product_metabox_delete_custom_fields' ) );
-		}
-		add_filter( 'tcp_the_add_to_cart_unit_field', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 );
-		add_filter( 'tcp_buy_button_unit_text', array( $this, 'tcp_the_add_to_cart_unit_field' ), 20, 2 ); //for 1.1.7
-		add_filter( 'tcp_add_item_shopping_cart', array( $this, 'tcp_add_item_shopping_cart' ) );
 	}
 }
 
