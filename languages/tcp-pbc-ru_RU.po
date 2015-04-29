@@ -1,0 +1,28 @@
+# Russian translation of TheCartPress and TheCartPress plugins.
+# This file is distributed under the same license as the TheCartPress package.
+# Vladimir Vasilenko <vladimir@shumbely.com>, 2013
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TheCartPress Price by customer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-17 22:56+0300\n"
+"PO-Revision-Date: 2013-08-17 22:57+0300\n"
+"Last-Translator: jeltoesolnce <vladimir@shumbely.com>\n"
+"Language-Team: russian <ru@li.org>\n"
+"Language: russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../PriceByCustomer.class.php:46
+msgid "Is Price defined by customer"
+msgstr "Цена определена покупателем"
+
+#: ../PriceByCustomer.class.php:68
+msgid "Suggested price"
+msgstr "Предлагаемая цена"
+#: ../PriceByCustomer.class.php:68
+msgid "Type your price"
+msgstr "Введите Вашу цену"

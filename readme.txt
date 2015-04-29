@@ -2,8 +2,8 @@
 Contributors: thecartpress
 Tags: price, prices, CartPress, ecommerce, e-commerce, store, shop, shopping, shopping cart, cart, custom post type, taxonomy, taxonomies, ecomerce, products, TheCartPress, html5, Australia
 Requires at least: 3.1
-Tested up to: 3.4.2
-Stable Tag: 1.0.3
+Tested up to: 4.3
+Stable Tag: 1.1
 
 Adds Prices by Customers to TheCartPress, the eCommerce Shopping Cart plugin for WordPress
 
@@ -37,6 +37,10 @@ This plugin is released under a GPL license.
 == Screenshots ==
 
 == Changelog ==
+= 1.1 =
+* Updated version
+* Donation
+
 = 1.0.3 =
 * Compatible with TheCartPress 1.2.4
 
